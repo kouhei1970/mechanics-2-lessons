@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第13回 減衰振動・等価ばね／等価質量｜基礎力学Ⅱ</title>
+<meta name="description" content="">
+<style>
+:root{--bg:#f6f5f1;--paper:#fff;--ink:#1f2328;--muted:#5d6570;--faint:#8a929b;--line:#dedad0;--line2:#ebe8e0;
+--accent:#2c5d7c;--accent-soft:#e7eff4;--accent-ink:#1e4a66;--ng:#a8412f;--ng-soft:#f7e9e5;--hl:#b8432f;
+--c6:#2f67a0;--c7:#6c4f9e;--c8:#23776a;--c9:#a86d12;--c10:#b8432f;
+--sans:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic UI","Yu Gothic",Meiryo,sans-serif;--serif:"Times New Roman",serif}
+@media (prefers-color-scheme: dark){:root{--bg:#16181b;--paper:#1e2125;--ink:#e6e3dc;--muted:#a8aeb5;--faint:#7d848c;--line:#383c42;--line2:#2c3035;
+--accent:#8db8d4;--accent-soft:#233340;--accent-ink:#b6d3e6;--ng:#e59a88;--ng-soft:#3a2521;--hl:#e98a74;
+--c6:#86b3e6;--c7:#b9a3e3;--c8:#6cc7b6;--c9:#e0ad55;--c10:#e98a74}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.8;letter-spacing:.02em}
+a{color:var(--accent)}
+.wrap{max-width:780px;margin:0 auto;padding:44px 16px 56px}
+.kicker{font-size:13px;letter-spacing:.12em;color:var(--accent-ink);margin:0}
+h1{font-size:30px;line-height:1.35;margin:8px 0 8px;letter-spacing:.04em}
+.lead{color:var(--muted);margin:0 0 24px}
+h2{font-size:18px;margin:36px 0 10px}
+.box{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 18px;font-size:15px}
+.box p{margin:6px 0}
+.note{font-size:14px;color:var(--muted);margin:10px 0 0}
+.plan{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--paper)}
+.plan li{margin:0;border-bottom:1px solid var(--line2);border-left:4px solid var(--cc,transparent)}
+.plan li:last-child{border-bottom:0}
+.plan a,.plan .row{display:grid;grid-template-columns:2.4em 6.6em minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:10px 14px 10px 0;color:inherit;text-decoration:none}
+.plan a:hover{background:var(--line2)}
+.wk{text-align:right;font-family:var(--serif);color:var(--muted);font-variant-numeric:tabular-nums}
+.dt{font-size:13.5px;color:var(--muted);white-space:nowrap}
+.dt.odd{color:var(--hl);font-weight:700}
+.tp{font-size:15px;font-weight:600}
+.tp small{display:block;font-weight:400;color:var(--muted);font-size:13px;line-height:1.6;margin-top:2px}
+.st{font-size:12px;border-radius:999px;padding:1px 10px;white-space:nowrap;border:1px solid var(--line);color:var(--faint)}
+.st.open{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.st.exam{background:var(--ng-soft);border-color:transparent;color:var(--ng)}
+li.exam{--cc:var(--ng);background:var(--ng-soft)}
+li.c6{--cc:var(--c6)} li.c7{--cc:var(--c7)} li.c8{--cc:var(--c8)} li.c9{--cc:var(--c9)} li.c10{--cc:var(--c10)} li.ret{--cc:var(--faint)}
+@media (max-width:600px){h1{font-size:25px}.plan a,.plan .row{grid-template-columns:2.2em minmax(0,1fr) auto;gap:2px 8px}
+.dt{grid-column:2;grid-row:1}.tp{grid-column:2/4;grid-row:2}.st{grid-column:3;grid-row:1;justify-self:end}.wk{grid-row:1/3}}
+.back{font-size:14px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:18px 0}
+.card dl{display:grid;grid-template-columns:6em minmax(0,1fr);gap:6px 12px;margin:0}
+.card dt{color:var(--muted);font-size:14px}.card dd{margin:0}
+footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--faint)}
+footer a{color:var(--faint)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<p class="back"><a href="../../">← 教材一覧へ</a></p>
+<p class="kicker">基礎力学Ⅱ　第13回</p>
+<h1>減衰振動・等価ばね／等価質量</h1>
+<div class="card"><dl><dt>日付</dt><dd>1/12（火）　2限（10:35〜12:15）</dd><dt>教科書</dt><dd>§10.4–10.6</dd></dl></div>
+<p>この回の自習用教材は準備中です。公開したら、このページと教材一覧に掲載します。</p>
+<footer>基礎力学Ⅱ（2026年度 後期）自習用教材　／　教科書：吉村靖夫・米内山誠『工業力学（改訂版）』コロナ社<br>
+AIエージェント（Claude Code）との協業で作成。ソース：<a href="https://github.com/kouhei1970/mechanics-2-lessons">GitHub リポジトリ</a>　&copy; 2026 Kouhei Ito — MIT License</footer>
+</div>
+</body>
+</html>
