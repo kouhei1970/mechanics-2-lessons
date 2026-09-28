@@ -11,8 +11,8 @@ index.html                   教材一覧（全15回の授業計画）
 lessons/lessonNN/index.html  各回のページ（公開中の回は教材本体＋ audio/ 音声・narration.json）
 ```
 
-このリポジトリは生成物です。教材の正本は授業用リポジトリ `mechanics-2` の `lessons/lessonNN/interactive/` にあり、
-`tools/publish_pages.py` で同期しています。
+このリポジトリは生成物です。教材の正本は授業用リポジトリの `lessons/lessonNN/interactive/` にあり、
+`_shared/tools/publish_pages.py` で同期しています。
 
 ## ライセンス
 
