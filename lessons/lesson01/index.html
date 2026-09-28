@@ -223,6 +223,7 @@ footer{max-width:760px; color:var(--faint); font-size:12.5px; padding:24px 0 40p
   <div class="in">
     <div class="crumb"><b>基礎力学Ⅱ 第1回</b>　ニュートンの運動の法則（教科書 §6.1）</div>
     <a class="iconbtn" href="https://kouhei1970.github.io/mechanics-2-lessons/" style="display:inline-flex;align-items:center;text-decoration:none">教材一覧</a>
+    <select class="iconbtn" id="voiceSel" aria-label="音声の種類" hidden><option value="audio">音声：edge-tts</option><option value="audio_irodori" hidden>音声：Irodori（生成した声）</option><option value="audio_irodori_kouhei" hidden>音声：Irodori（先生の声）</option></select>
     <button class="iconbtn" id="themeBtn" type="button" aria-label="表示の明るさを切り替え">明/暗</button>
   </div>
   <div class="progress" id="progress"></div>
@@ -826,12 +827,17 @@ window.addEventListener("scroll", onScroll, {passive:true}); onScroll();
 })();
 
 /* ---------- 音声解説 ---------- */
+/* 音声のフォルダ: audio（既定）／audio_irodori（比較用。存在するときだけ切り替えを表示）。?voice=irodori でも指定可 */
 (function(){
   var icon = '<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M2 6h2.5L8 3v10L4.5 10H2z"/><path fill="none" stroke="currentColor" stroke-width="1.3" d="M10.5 5.5a3.5 3.5 0 0 1 0 5M12.3 3.6a6 6 0 0 1 0 8.8"/></svg>';
-  var current = null;
+  var current = null, players = [], key = "mech2-voice";
+  var dir = "audio";
+  try { dir = localStorage.getItem(key) || dir; } catch(e){}
+  var q = (location.search.match(/[?&]voice=([a-z_]+)/) || [])[1];
+  if (q) dir = ({irodori: "audio_irodori", kouhei: "audio_irodori_kouhei"})[q] || "audio";
   $$(".audio-btn").forEach(function(b){
     var id = b.getAttribute("data-audio");
-    var au = new Audio(); au.preload = "metadata"; au.src = "audio/" + id + ".mp3";
+    var au = new Audio(); au.preload = "metadata";
     function label(){ b.innerHTML = icon + (au.paused ? "音声解説" : "一時停止") + (isFinite(au.duration) && au.paused ? '<span style="opacity:.7">（' + Math.floor(au.duration/60) + ":" + ("0"+Math.round(au.duration%60)).slice(-2) + '）</span>' : ""); }
     au.addEventListener("loadedmetadata", function(){ b.hidden = false; label(); });
     au.addEventListener("error", function(){ b.hidden = true; });
@@ -839,7 +845,24 @@ window.addEventListener("scroll", onScroll, {passive:true}); onScroll();
     b.addEventListener("click", function(){
       if (au.paused){ if (current && current !== au) current.pause(); current = au; au.play(); } else au.pause();
     });
+    players.push({au: au, id: id});
   });
+  function load(d){
+    dir = d;
+    players.forEach(function(p){ p.au.pause(); p.au.src = d + "/" + p.id + ".mp3"; });
+  }
+  load(dir);
+  var sel = $("#voiceSel");
+  /* 比較用の音声フォルダがあるものだけ選択肢に出す。無ければ切り替え自体を出さない */
+  ["audio_irodori", "audio_irodori_kouhei"].forEach(function(d){
+    var probe = new Audio(); probe.preload = "metadata";
+    probe.addEventListener("loadedmetadata", function(){
+      sel.querySelector('option[value="' + d + '"]').hidden = false; sel.hidden = false; sel.value = dir;
+    });
+    probe.addEventListener("error", function(){ if (dir === d) load("audio"); });
+    probe.src = d + "/s01.mp3";
+  });
+  sel.addEventListener("change", function(){ load(sel.value); try { localStorage.setItem(key, sel.value); } catch(e){} });
 })();
 
 /* ---------- アニメーション補助 ---------- */
